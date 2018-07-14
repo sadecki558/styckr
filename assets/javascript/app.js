@@ -99,11 +99,24 @@ function createMarker(place, icon) {
 }
         
 //zomato api
-$.ajax({
+/*$.ajax({
     method: "GET",
     url: queryUrl,
     dataType: "json",
     headers: {
         "user-key": "cf5804bac687763220c3be71ce79923b"
     },
+})
+*/
+
+$.ajax({
+    method: "GET",
+    url: queryUrl,
+    dataType: "json",
+    headers: {
+        "Authorization": "Bearer gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx"
+    }}).then(function (response) {
+    console.log(response.businesses);
+    //$("#list").append(response.businesses[0].name);
+
 })
