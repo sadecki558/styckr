@@ -6,9 +6,11 @@ var pos;
 var infowindow;
 var typs = [];
 var clicker;
-var queryUrl = "https://developers.zomato.com/api/v2.1/search?count=6&lat=37.79161&lon=-122.42143&establishment_type=6"
-var result;
-console.log(typs);
+var test = 0;
+var queryUrl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?";
+// "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=oakville&term=Starbucks"
+var result = [];
+//console.log(typs);
   
  
 function initialize() 
@@ -65,6 +67,7 @@ function initialize()
         typs.push("bar");
         console.log("clicked" + "  " + clicker + "" + typs);
     }); 
+
   //retrieves results
   function callback(results, status) 
     {
@@ -73,8 +76,8 @@ function initialize()
         for (var i = 0; i < results.length; i++) 
         {    
           createMarker(results[i]);
-          console.log(results[i].name);
-          result = results[i].name;
+          console.log(results[i]);
+          result.push(results[i].name);
         }
       }
     }
@@ -111,12 +114,18 @@ function createMarker(place, icon) {
 
 $.ajax({
     method: "GET",
-    url: queryUrl,
+    url: queryUrl + "location=" + result[0] + "&term="+result[1],
     dataType: "json",
     headers: {
-        "Authorization": "Bearer gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx"
+        "Authorization": "Bearer gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx",
     }}).then(function (response) {
-    console.log(response.businesses);
-    //$("#list").append(response.businesses[0].name);
+        console.log(response);
+   /* //console.log(response);
+    for (i=0;i<response.businesses.length;i++){
+        //console.log(response.businesses[i].rating);
+    }
+    //console.log(result);
+    $(".card-title").append(response.businesses[0].name);
+    */
 
 })
