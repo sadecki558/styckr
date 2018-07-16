@@ -80,15 +80,23 @@ function initialize() {
                 infowindow.open(map, this);
             });
     }
-
+    function cards(number){
+        var num = number.toString();
+        id_string = "cards" + num;
+        var card_append = $('<div class="card blue-grey darken-1" id="card"'+id_string+'><div class="card-content white-text"><span class="card-title">Card Title</span><section id="card-image"'+id_string+'></section><p class = "card-description">I am a very simple card.</div></div>');
+        $(".card_div").append(card_append);
+        console.log("it works");
+    }
   //retrieves results
     function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {    
                 createMarker(results[i]);
-                console.log(results[i]);
+                cards(i);
+                //console.log(results[i]);
                 result.push(results[i].name);
                 address.push(results[i].vicinity);
+
             queryUrl2 = queryUrl + "location=" + address[5] + "&term="+result[5] + "&limit=1";
             $.ajax({
                 method: "GET",
@@ -97,7 +105,7 @@ function initialize() {
                 headers: {
                     "Authorization": "Bearer gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx",
                 }}).then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     $(".card-title").empty();
                     $(".card-title").append(response.businesses[0].name+ " rating: "+response.businesses[0].rating + " closed : "+ response.businesses[0].is_closed);
                     $(".card-description").empty();
