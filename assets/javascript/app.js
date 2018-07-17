@@ -11,22 +11,21 @@ var queryUrl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/busi
 var result = [];
 var address = [];
 var queryUrl2 = "";
-//console.log(typs);
-  
- 
+var search = $("#search").val().trim();
+console.log(search);
 function initialize() {
     var mapOptions = {
     zoom: 16,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    //HTML5 geolocation
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             infowindow = new google.maps.InfoWindow({map: map,position: pos,content: "You're Here!"});
            
-            // Request from Typs Array
+ 
             var request = {location:pos,radius:1000, types:typs};
             map.setCenter(pos);
             infowindow = new google.maps.InfoWindow();
@@ -41,28 +40,35 @@ function initialize() {
     handleNoGeolocation(false);
     }
  
-   //button click for marker
+
     $("#cafe").on("click",function(){
         clicker = true;
         initialize();
+        $(".cards").html("");
         typs = [];
         typs.push("cafe");
-        console.log("clicked" + "  " + clicker + "" + typs);
+       
     }); 
     $("#restaurants").on("click",function(){
         clicker = true;
+        $(".cards").html("");
         initialize();
         typs= [];
         typs.push("restaurant");
-        console.log("clicked" + "  " + clicker + "" + typs);
+        
     }); 
     $("#bars").on("click",function(){
         clicker = true;
+        $(".cards").html("");
         initialize();
         typs = [];
         typs.push("bar");
-        console.log("clicked" + "  " + clicker + "" + typs);
+        
     }); 
+
+  function create() {
+      
+  }
     function createMarker(place, icon) {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
@@ -80,30 +86,23 @@ function initialize() {
                 infowindow.open(map, this);
             });
     }
-    function cards(number){
-        var num = number.toString();
-        var card_class = "card-title"+num;
-        var card_desc = "card-description"+num;
-        id_string = "cards" + num;
-        var card_append = $('<div class="card blue-grey darken-1" id="card"'+id_string+'><div class="card-content white-text"><span class='+card_class+'>Card Title</span><section id="card-image"'+id_string+'></section><p class ='+card_desc+'>I am a very simple card.</div></div>');
-        $(".card_div").append(card_append);
-    }
-
-    function query_switcher(index){
-        queryUrl2 = queryUrl + "location=" + address[index] + "&term="+result[index] + "&limit=1";
-    }
 
   //retrieves results
     function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {    
                 createMarker(results[i]);
-                cards(i);
                 //console.log(results[i]);
                 result.push(results[i].name);
                 address.push(results[i].vicinity);
+                
+                if(result && address === 0){
+                    $(".cards").text("No Results")
+                }
+                
+                queryUrl2 = queryUrl + "location=" + address[i] + "&term="+result[i] + "&limit=1";
+                var cards = $('<div class="card blue-grey darken-1"></div>');      
 
-            queryUrl2 = queryUrl + "location=" + address[1] + "&term="+result[1] + "&limit=1";
             $.ajax({
                 method: "GET",
                 url: queryUrl2,
@@ -111,37 +110,20 @@ function initialize() {
                 headers: {
                     "Authorization": "Bearer gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx",
                 }}).then(function (response) {
-                    //console.log(response);
-                    for(i=0;i<results.length;i++){
-                        console.log(results);
-                        var card_title = ".card-title" +i.toString();
-                        console.log(card_title);
-                        var card_description = ".card-description" +i.toString();
-                        $(card_title).empty();
-                        $(card_title).append(response.businesses[0].name+ " rating: "+response.businesses[0].rating + " closed : "+ response.businesses[0].is_closed);
-                        $(card_description).empty();
-                        $(card_description).append("contact "+ response.businesses[0].name+ " at " + response.businesses[0].phone);
-                        query_switcher(index);
-                        console.log(i);
-                    }
-            })
+                            console.log(response.businesses[0].name);
+                            var distance = response.businesses[0].distance; 
+                            var text = $('<div class="card blue-grey darken-1 cds">'+ response.businesses[0].name + '<br/>' + 'Rating: ' + response.businesses[0].rating + '/5' + '<br/>'+ 'Price: ' + response.businesses[0].price + '<br/> '+'Phone #: ' + response.businesses[0].phone + '<br/>' + 'Distance: ' + (Math.round( distance * 100 )/100 ).toString() +'m' + '<br/>' + '<button class = "waves-effect waves-light btn intBtn"><a href = ' + response.businesses[0].url + ' id = "buttonTxt"> On Yelp! </a> </button>'+'</div>')
+                            $(".cards").append(text);
+                
+
+            }) 
+             
+                
             }
+            
         }
     }
     
 }
-//Makes a marker
-
-        
-//zomato api
-/*$.ajax({
-    method: "GET",
-    url: queryUrl,
-    dataType: "json",
-    headers: {
-        "user-key": "cf5804bac687763220c3be71ce79923b"
-    },
-})
-*/
-//console.log(result);
-
+// SPARE KEY
+// gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx
