@@ -108,7 +108,7 @@ function initialize() {
                 url: queryUrl2,
                 dataType: "json",
                 headers: {
-                    "Authorization": "Bearer "R2RXNWRVFQgmlFfg-7_lfm7i0p7ck1k-87GJy1sjJCTbGirXDYRKi5h0l7r4Ltb1M-_nNLskftSFHoyj71QsX3asqivL8O8LuPcky9rLQ6jwYnzPtdThYciL8gNMW3Yx",
+                    "Authorization": "Bearer R2RXNWRVFQgmlFfg-7_lfm7i0p7ck1k-87GJy1sjJCTbGirXDYRKi5h0l7r4Ltb1M-_nNLskftSFHoyj71QsX3asqivL8O8LuPcky9rLQ6jwYnzPtdThYciL8gNMW3Yx",
                 }}).then(function (response) {
                             console.log(response.businesses[0].name);
                             var distance = response.businesses[0].distance; 
