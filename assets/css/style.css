@@ -58,12 +58,13 @@ video {
     top: 0px;
     left: 0;
 }
-#map {
+/*#map {
     width:100%;
     height:400px;
     box-shadow: 8px 16px 10px rgba(0, 0, 0, 0.527);
     border-radius: 20px;
-}
+}*/
+#mapid { height: 180px; }
 #searchbar-wrapper {
     background-color: rgba(255, 255, 255, 0);
     /*margin-bottom: 5px;*/
