@@ -108,7 +108,7 @@ function initialize() {
                 url: queryUrl2,
                 dataType: "json",
                 headers: {
-                    "Authorization": "Bearer gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx",
+                    "Authorization": "Bearer ",
                 }}).then(function (response) {
                             console.log(response.businesses[0].name);
                             var distance = response.businesses[0].distance; 
@@ -125,5 +125,4 @@ function initialize() {
     }
     
 }
-// SPARE KEY
-// gqqI1WuGp5Wr7QmZmrtJleBqhRGAVHibKExf_CtV2P7CFQ4LJgOI9gOX0zJ_-JdArDZXuvb-1mOFBsDfSoy7Rr9KJqJka3b837KqtJgQbROVBnOpbZSlgyEcKhVKW3Yx
+

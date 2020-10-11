@@ -66,7 +66,8 @@ video {
 }
 #searchbar-wrapper {
     background-color: rgba(255, 255, 255, 0);
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
+    margin-top: 25%;
 }
 .tabs {
     box-shadow: 8px 16px 10px rgba(0, 0, 0, 0.527);
